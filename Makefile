@@ -15,8 +15,8 @@ show:             ## Show the current environment.
 	@echo "Current environment:"
 	@if [ "$(USING_POETRY)" ]; then poetry env info && exit; fi
 	@echo "Running using $(ENV_PREFIX)"
-	@$(ENV_PREFIX)python -V
-	@$(ENV_PREFIX)python -m site
+	@$(ENV_PREFIX)python3 -V
+	@$(ENV_PREFIX)python3 -m site
 
 .PHONY: install
 install:          ## Install the project in dev mode.
