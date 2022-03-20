@@ -32,7 +32,7 @@ def read_requirements(path):
 setup(
     name="xpath",
     version=read("xpath", "VERSION"),
-    description="Awesome xpath created by cs4221",
+    description="XPath traversal for JSON and MongoDB created by Lee En Hao and Leong Jia Hao, Timothy",
     url="https://github.com/cs4221/xpath/",
     long_description=read("README.md"),
     long_description_content_type="text/markdown",
