@@ -99,7 +99,7 @@ class PyMongoElement(ET.Element):
             # Return the number of documents in this collection
             # First check that you have database_name and collection_name in your attributes
             return collection.count_documents({})
-        
+
         assert PyMongoElement.object_id in self.attrib, "object_id is not set"
         document = collection.find_one(
             {"_id": ObjectId(self.attrib[PyMongoElement.object_id])}
@@ -151,9 +151,7 @@ class PyMongoElement(ET.Element):
                     )
                     return result
 
-        assert(
-            PyMongoElement.object_id in self.attrib
-        ), "object_id is not set"
+        assert PyMongoElement.object_id in self.attrib, "object_id is not set"
         # This object is a document - fall back on the map converter
         if self.tag == PyMongoElement.document:
             document = collection.find_one(
@@ -270,4 +268,6 @@ class PyMongoElement(ET.Element):
                 {"_id": ObjectId(self.attrib[PyMongoElement.object_id])}
             )
 
-            yield from elem_to_tree(document, PyMongoElement.document).getroot().iter(tag)
+            yield from elem_to_tree(
+                document, PyMongoElement.document
+            ).getroot().iter(tag)

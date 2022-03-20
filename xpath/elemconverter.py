@@ -2,8 +2,8 @@
 Methods to take a Python dictionary/list/value, and turn it into xml's original object tree.
 """
 
-from typing import Any
 import xml.etree.ElementTree as ET
+from typing import Any
 
 
 def insert(parent: ET.Element, tag: str, elem: Any) -> ET.Element:
@@ -34,7 +34,7 @@ def elem_to_tree(elem: Any, roottag: str = "root") -> ET.ElementTree:
     The top level node has tag name `roottag`.
     """
     if elem is None:
-        return None
+        raise TypeError("elem must not be None")
 
     tree: ET.Element = ET.Element("remove_later")
     return ET.ElementTree(insert(tree, roottag, elem))

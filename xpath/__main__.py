@@ -4,6 +4,7 @@ import json  # pragma: no cover
 from . import BaseClass, base_function  # pragma: no cover
 from .jsonconverter import json_to_tree
 
+
 def main() -> None:  # pragma: no cover
     """
     The main function executes on commands:
