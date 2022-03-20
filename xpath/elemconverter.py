@@ -19,7 +19,7 @@ def insert(parent: ET.Element, tag: str, elem: Any) -> ET.Element:
 
     if isinstance(elem, dict):
         for key, value in elem.items():
-            insert(child_node, key, value)
+            insert(child_node, str(key), value)
     elif isinstance(elem, list):
         for arr_elem in elem:
             insert(child_node, "element", arr_elem)
@@ -34,8 +34,5 @@ def elem_to_tree(elem: Any, roottag: str = "root") -> ET.ElementTree:
     Takes a Python dictionary/list/value, and converts it to an object tree.
     The top level node has tag name `roottag`.
     """
-    if elem is None:
-        raise TypeError("elem must not be None")
-
     tree: ET.Element = ET.Element("remove_later")
     return ET.ElementTree(insert(tree, roottag, elem))
