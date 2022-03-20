@@ -3,7 +3,7 @@ import io
 import os
 import pytest
 
-from xpath import insert, elem_to_tree
+from xpath import elem_to_tree
 
 
 def patch_open(open_func, files):
@@ -43,25 +43,31 @@ def cleanup_files(monkeypatch):
         os.remove(file)
 
 
-def test_elem_to_tree_convert_value():
+def test_elem_to_tree_convert_str():
     str_tree = elem_to_tree("hello")
     str_tree.write("output.xml")
     with open("output.xml", "r") as file:
         data = file.read().rstrip()
         assert data == "<root>hello</root>"
 
+
+def test_elem_to_tree_convert_int():
     int_tree = elem_to_tree(1)
     int_tree.write("output.xml")
     with open("output.xml", "r") as file:
         data = file.read().rstrip()
         assert data == "<root>1</root>"
 
+
+def test_elem_to_tree_convert_bool():
     bool_tree = elem_to_tree(False)
     bool_tree.write("output.xml")
     with open("output.xml", "r") as file:
         data = file.read().rstrip()
         assert data == "<root>False</root>"
 
+
+def test_elem_to_tree_convert_None():
     None_tree = elem_to_tree(None)
     None_tree.write("output.xml")
     with open("output.xml", "r") as file:
