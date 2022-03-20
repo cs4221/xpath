@@ -1,7 +1,8 @@
-import argparse  # pragma: no cover
+import argparse
+import json  # pragma: no cover
 
 from . import BaseClass, base_function  # pragma: no cover
-
+from .jsonconverter import json_to_tree
 
 def main() -> None:  # pragma: no cover
     """
@@ -49,6 +50,32 @@ def main() -> None:  # pragma: no cover
     print(f"{args.message} {args.name}!")
     if args.verbose:
         print("Verbose mode is on.")
+
+    json_obj = """
+    {
+        "glossary": {
+            "title": "example glossary",
+        "GlossDiv": {
+                "title": "S",
+        "GlossList": {
+                    "GlossEntry": {
+                        "ID": "SGML",
+            "SortAs": "SGML",
+            "GlossTerm": "Standard Generalized Markup Language",
+            "Acronym": "SGML",
+            "Abbrev": "ISO 8879:1986",
+            "GlossDef": {
+                            "para": "A meta-markup language, used to create markup languages such as DocBook.",
+                "GlossSeeAlso": ["GML", "XML"]
+                        },
+            "GlossSee": "markup"
+                    }
+                }
+            }
+        }
+    }
+    """
+    tree = json_to_tree(json_obj)
 
     print("Executing main function")
     base = BaseClass()
