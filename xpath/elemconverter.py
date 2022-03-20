@@ -1,5 +1,6 @@
 """
-Methods to take a Python dictionary/list/value, and turn it into xml's original object tree.
+Methods to take a Python dictionary/list/value,
+and turn it into xml's original object tree.
 """
 
 import xml.etree.ElementTree as ET
@@ -8,8 +9,8 @@ from typing import Any
 
 def insert(parent: ET.Element, tag: str, elem: Any) -> ET.Element:
     """
-    Recursively takes a tag, an element which is either a list, dict or a value type,
-    and creates subtrees.
+    Recursively takes a tag, an element which is either a list,
+    dict or a value type, and creates subtrees.
 
     Items in lists are tagged with 'element'.
     The return value is `child_node`.

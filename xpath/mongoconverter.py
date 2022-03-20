@@ -97,7 +97,8 @@ class PyMongoElement(ET.Element):
 
         if self.tag == PyMongoElement.collection:
             # Return the number of documents in this collection
-            # First check that you have database_name and collection_name in your attributes
+            # First check that you have database_name and
+            # collection_name in your attributes
             return collection.count_documents({})
 
         assert PyMongoElement.object_id in self.attrib, "object_id is not set"
