@@ -25,7 +25,12 @@ def test_json_to_tree_array_string():
                 '{ "firstName":"Anna", "lastName":"Smith" },'
                 '{ "firstName":"Peter", "lastName":"Jones" }'
                 ']}')
-    expected_str = ("<root><employees><element><firstName>John</firstName><lastName>Doe</lastName></element><element><firstName>Anna</firstName><lastName>Smith</lastName></element><element><firstName>Peter</firstName><lastName>Jones</lastName></element></employees></root>")
+    expected_str = ("<root><employees>"
+                    "<element><firstName>John</firstName>"
+                    "<lastName>Doe</lastName></element><element>"
+                    "<firstName>Anna</firstName><lastName>Smith</lastName>"
+                    "</element><element><firstName>Peter</firstName><lastName>"
+                    "Jones</lastName></element></employees></root>")
     tree = json_to_tree(test_str)
     tree.write("output.xml")
     with open("output.xml", "r") as file:
