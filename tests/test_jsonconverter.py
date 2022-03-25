@@ -30,7 +30,8 @@ def test_json_to_tree_array_string():
                     "<lastName>Doe</lastName></element><element>"
                     "<firstName>Anna</firstName><lastName>Smith</lastName>"
                     "</element><element><firstName>Peter</firstName><lastName>"
-                    "Jones</lastName></element></employees></root>")
+                    "Jones</lastName></element>"
+                    "</employees></root>")
     tree = json_to_tree(test_str)
     tree.write("output.xml")
     with open("output.xml", "r") as file:
