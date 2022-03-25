@@ -17,3 +17,42 @@ def test_json_to_tree_raw_value():
     with open("output.xml", "r") as file:
         data = file.read().rstrip()
         assert data == "<root>1</root>"
+
+'''
+Problem: Unable to handle array of data i.e.: collection with no entry tags.
+
+JSON test object:
+{"employees":[
+  { "firstName":"John", "lastName":"Doe" },
+  { "firstName":"Anna", "lastName":"Smith" },
+  { "firstName":"Peter", "lastName":"Jones" }
+]}
+
+Current output:
+<employees>
+  <firstname>John</firstname><lastname>Doe</lastname>
+  <firstname>Anna</firstname><lastname>Smith</lastname>
+  <firstname>Peter</firstname><lastname>Jones</lastname>
+</employees>
+
+Ideal output:
+<employees>
+  <employee>
+    <firstName>John</firstName> <lastName>Doe</lastName>
+  </employee>
+  <employee>
+    <firstName>Anna</firstName> <lastName>Smith</lastName>
+  </employee>
+  <employee>
+    <firstName>Peter</firstName> <lastName>Jones</lastName>
+  </employee>
+</employees>
+'''
+def test_json_to_tree_array_string():
+    test_str = '''{"employees":[{ "firstName":"John", "lastName":"Doe" }, { "firstName":"Anna", "lastName":"Smith" },{ "firstName":"Peter", "lastName":"Jones" }]}'''
+    expected_str = ("<root><employees><element><firstName>John</firstName><lastName>Doe</lastName></element><element><firstName>Anna</firstName><lastName>Smith</lastName></element><element><firstName>Peter</firstName><lastName>Jones</lastName></element></employees></root>")
+    tree = json_to_tree(test_str)
+    tree.write("output.xml")
+    with open("output.xml", "r") as file:
+        data = file.read().strip()
+        assert data == expected_str
