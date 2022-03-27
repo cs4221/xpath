@@ -59,4 +59,4 @@ def test_creating_mongoconverter(mongo_client):
 def test_database_list(mongo_client):
     root = PyMongoElement(mongo_client)
     result: list[PyMongoElement] = root.findall("./database")
-    assert len(result) == len(mongo_client.list_collection_names())
+    assert len(result) == len(mongo_client[database_name].list_collection_names())
