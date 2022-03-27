@@ -78,8 +78,6 @@ jobs:
       - uses: ankane/setup-mongodb@v1
       - name: Run MongoDB
         run: |
-          sudo mkdir -p /data/db
-          sudo chown -R `id -un` /data/db
           sudo mongod --port 27020
       - name: Install project
         run: make install
