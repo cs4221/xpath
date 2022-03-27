@@ -1,6 +1,5 @@
 from pymongo import MongoClient
 
-# Check if all OSes can access the same MongoDB instance
 def test_connection():
     client = MongoClient(
         "mongodb://localhost:27017/", serverSelectionTimeoutMS=0
