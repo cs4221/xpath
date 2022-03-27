@@ -2,7 +2,7 @@ from pymongo import MongoClient
 import pytest
 import os
 import json
-from xpath import mongoconverter
+from xpath import PyMongoElement
 
 database_name = "cs4221_test"
 data_directory = os.path.join(os.path.dirname(__file__), "mongo_data")
@@ -48,3 +48,9 @@ def test_inventory(mongo_client):
     assert "inventory" in database.list_collection_names()
     paper = database.inventory.find_one({"item": "paper"})
     assert paper["qty"] == 100
+
+
+# Test for xpath
+def test_creating_mongoconverter(mongo_client):
+    root = PyMongoElement(mongo_client)
+    assert root.tag == "databases"
