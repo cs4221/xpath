@@ -11,4 +11,3 @@ gitchangelog
 mkdocs
 xmltodict
 dicttoxml
-pytest-mongodb
