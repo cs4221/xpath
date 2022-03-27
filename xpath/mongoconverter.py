@@ -144,9 +144,10 @@ class PyMongoElement(ET.Element):
             PyMongoElement.collection_name in self.attrib
         ), "collection_name is not set"
         collection = database[self.attrib[PyMongoElement.collection_name]]
-
+        
+        i = 0
         if self.tag == PyMongoElement.collection:
-            for i, doc in collection.find():
+            for doc in collection.find():
                 if i == index:
                     attrib_clone = self.attrib.copy()
                     attrib_clone[PyMongoElement.object_id] = str(doc._id)
@@ -154,6 +155,7 @@ class PyMongoElement(ET.Element):
                         self.client, PyMongoElement.document, attrib_clone
                     )
                     return result
+                i += 1
 
         assert PyMongoElement.object_id in self.attrib, "object_id is not set"
         # This object is a document - fall back on the map converter
