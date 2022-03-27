@@ -58,8 +58,7 @@ def test_creating_mongoconverter(mongo_client):
 
 def test_database_list(mongo_client):
     root = PyMongoElement(mongo_client)
-    result: list[PyMongoElement] = root.findall("./database")
-    names_of_elems = [elem for elem in result]
-    assert len(result) == len(
-        mongo_client[database_name].list_collection_names()
+    db: PyMongoElement = root.find(
+        f"./database[@database_name='{database_name}']"
     )
+    assert db.attrib["database_name"] == database_name
