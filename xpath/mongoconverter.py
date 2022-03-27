@@ -23,12 +23,12 @@ class PyMongoElement(ET.Element):
     A node at the level of a collection will have the tags:
         - database_name
         - collection_name
-        -> <collection database_name = "app" collection_name="users">
+        -> e.g. <collection database_name = "app" collection_name="users">
     A node at the level of a document will have the tags:
         - database_name
         - collection_name
         - object_id
-        -> <document ...>
+        -> e.g. <document ...>
     """
 
     # Constants for the attributes

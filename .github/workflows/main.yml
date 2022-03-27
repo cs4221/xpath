@@ -30,9 +30,22 @@ jobs:
         run: make install
       - name: Run linter
         run: make lint
-
+  
+  init_mongo:
+    strategy:
+      fail-fast: false
+      matrix:
+        mongodb-version: [latest]
+        os: [ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Start MongoDB
+        uses: supercharge/mongodb-github-action@1.7.0
+        with:
+          mongodb-version: ${{ matrix.mongodb-version }}
+        
   tests_linux:
-    needs: linter
+    needs: [linter, init_mongo]
     strategy:
       fail-fast: false
       matrix:
@@ -54,7 +67,7 @@ jobs:
         #   fail_ci_if_error: true
 
   tests_mac:
-    needs: linter
+    needs: [linter, init_mongo]
     strategy:
       fail-fast: false
       matrix:
@@ -72,7 +85,7 @@ jobs:
         run: make test
 
   tests_win:
-    needs: linter
+    needs: [linter, init_mongo]
     strategy:
       fail-fast: false
       matrix:
