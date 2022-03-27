@@ -65,7 +65,7 @@ class PyMongoElement(ET.Element):
     def __repr__(self):
         return "<%s %r at %#x>" % (
             self.__class__.__name__,
-            repr(self.pymongotag),
+            repr(self.tag),
             id(self),
         )
 
