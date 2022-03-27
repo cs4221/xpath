@@ -1,5 +1,6 @@
 from pymongo import MongoClient
 
+
 def test_connection():
     client = MongoClient(
         "mongodb://localhost:27017/", serverSelectionTimeoutMS=0
