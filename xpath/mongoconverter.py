@@ -63,9 +63,12 @@ class PyMongoElement(ET.Element):
         self.attrib = attrib
 
     def __repr__(self):
-        return "<%s %r at %#x>" % (
+        return "<%s %r attributes = %s at %#x>" % (
             self.__class__.__name__,
             repr(self.tag),
+            " ".join(
+                [str(k) + "=" + str(v) for (k, v) in self.attrib.items()]
+            ),
             id(self),
         )
 
