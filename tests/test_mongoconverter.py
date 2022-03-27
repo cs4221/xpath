@@ -33,6 +33,7 @@ def mongo_client():
 
 
 def test_players(mongo_client):
-    assert "players" in mongo_client.list_collection_names()
-    manuel = mongo_client.players.find_one({"name": "Manuel"})
+    database = mongo_client[database_name]
+    assert "players" in database.list_collection_names()
+    manuel = database.players.find_one({"name": "Manuel"})
     assert manuel["surname"] == "Neuer"
