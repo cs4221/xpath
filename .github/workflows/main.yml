@@ -46,7 +46,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - uses: ankane/setup-mongodb@v1
       - run: |
-        mongo --eval "db.version()"
+          mongo --eval "db.version()"
       - name: Install project
         run: make install
       - name: Run tests
@@ -71,7 +71,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - uses: ankane/setup-mongodb@v1
       - run: |
-        mongo --eval "db.version()"
+          mongo --eval "db.version()"
       - name: Install project
         run: make install
       - name: Run tests
@@ -92,7 +92,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - uses: ankane/setup-mongodb@v1
       - run: |
-        mongo --eval "db.version()"
+          mongo --eval "db.version()"
       - name: Install Pip
         run: pip install --user --upgrade pip
       - name: Install project
