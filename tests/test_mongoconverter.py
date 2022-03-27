@@ -71,5 +71,9 @@ def test_getting_players(mongo_client):
     players: PyMongoElement = root.find(
         f"./database[@database_name='{database_name}']/collection[@collection_name='players']"
     )
+
     # Check that the person with the surname 'Wehn' is a keeper
-    assert players.find("./[surname='Wehn']").text() == "keeper"
+    assert (
+        players.find("./document/[surname='Wehn']/../position").text()
+        == "keeper"
+    )
