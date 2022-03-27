@@ -144,13 +144,13 @@ class PyMongoElement(ET.Element):
             PyMongoElement.collection_name in self.attrib
         ), "collection_name is not set"
         collection = database[self.attrib[PyMongoElement.collection_name]]
-        
+
         i = 0
         if self.tag == PyMongoElement.collection:
             for doc in collection.find():
                 if i == index:
                     attrib_clone = self.attrib.copy()
-                    attrib_clone[PyMongoElement.object_id] = str(doc._id)
+                    attrib_clone[PyMongoElement.object_id] = str(doc["_id"])
                     result = PyMongoElement(
                         self.client, PyMongoElement.document, attrib_clone
                     )
