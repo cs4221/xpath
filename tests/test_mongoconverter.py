@@ -3,6 +3,7 @@ import pytest
 import os
 import json
 from xpath import PyMongoElement
+import xml.etree.ElementTree as ET
 
 database_name = "cs4221_test"
 data_directory = os.path.join(os.path.dirname(__file__), "mongo_data")
@@ -65,16 +66,19 @@ def test_getting_test_database(mongo_client):
     assert db.attrib["database_name"] == database_name
 
 
-def test_getting_players(mongo_client):
-    """Gets the `players` collection node."""
-    root = PyMongoElement(mongo_client)
-    players: PyMongoElement = root.find(
-        f"./database[@database_name='{database_name}']/collection[@collection_name='players']"
-    )
+# def test_getting_players(mongo_client):
+#     """Gets the `players` collection node."""
+#     root = PyMongoElement(mongo_client)
+#     players: PyMongoElement = root.find(
+#         f"./database[@database_name='{database_name}']/collection[@collection_name='players']"
+#     )
 
-    # Check that the person with the surname 'Wehn' is a keeper
-    assert (
-        players.find("./document/[surname='Wehn']/../position").text()
-        == "keeper"
-    )
-    mongo_client.url_list()
+#     # Check that the person with the surname 'Wehn' is a keeper
+#     # assert (
+#     #     players.find("./document/[surname='Wehn']/../position").text()
+#     #     == "keeper"
+#     # )
+#     # mongo_client.url_list()
+
+#     for node in players:
+#         print(node)

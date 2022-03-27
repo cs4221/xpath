@@ -101,8 +101,6 @@ class PyMongoElement(ET.Element):
 
         if self.tag == PyMongoElement.collection:
             # Return the number of documents in this collection
-            # First check that you have database_name and
-            # collection_name in your attributes
             return collection.count_documents({})
 
         assert PyMongoElement.object_id in self.attrib, "object_id is not set"
@@ -149,9 +147,7 @@ class PyMongoElement(ET.Element):
         collection = database[self.attrib[PyMongoElement.collection_name]]
 
         if self.tag == PyMongoElement.collection:
-            i = 0
-            for doc in collection.find():
-                i += 1
+            for i, doc in enumerate(collection.find()):
                 if i == index:
                     attrib_clone = self.attrib.copy()
                     attrib_clone[PyMongoElement.object_id] = str(doc["_id"])
@@ -258,7 +254,7 @@ class PyMongoElement(ET.Element):
 
             for doc in collection.find():
                 attrib_clone = self.attrib.copy()
-                attrib_clone[PyMongoElement.object_id] = str(doc._id)
+                attrib_clone[PyMongoElement.object_id] = str(doc["_id"])
                 child = PyMongoElement(
                     self.client, PyMongoElement.document, attrib_clone
                 )
