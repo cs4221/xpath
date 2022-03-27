@@ -46,7 +46,10 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - uses: ankane/setup-mongodb@v1
       - name: Run MongoDB
-        run: mongod
+        run: |
+          sudo chown -R mongodb:mongodb /var/lib/mongodb
+          sudo chown mongodb:mongodb /tmp/mongodb-27017.sock
+          sudo service mongod restart
       - name: Install project
         run: make install
       - name: Run tests
