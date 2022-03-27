@@ -56,9 +56,22 @@ def test_creating_mongoconverter(mongo_client):
     assert root.tag == "databases"
 
 
-def test_database_list(mongo_client):
+def test_getting_test_database(mongo_client):
+    """Gets the cs4221_test database node."""
     root = PyMongoElement(mongo_client)
     db: PyMongoElement = root.find(
         f"./database[@database_name='{database_name}']"
     )
     assert db.attrib["database_name"] == database_name
+
+
+def test_getting_players(mongo_client):
+    """Gets the `players` collection node."""
+    root = PyMongoElement(mongo_client)
+    players: PyMongoElement = root.find(
+        f"./database[@database_name='{database_name}']/collection[@collection_name='players']"
+    )
+    # Check that Mario Wehn is a keeper
+    assert (
+        players.find(".//[name='Mario' and surname='Wehn']").text() == "keeper"
+    )
