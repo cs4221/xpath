@@ -77,3 +77,4 @@ def test_getting_players(mongo_client):
         players.find("./document/[surname='Wehn']/../position").text()
         == "keeper"
     )
+    mongo_client.url_list()

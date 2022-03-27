@@ -151,13 +151,13 @@ class PyMongoElement(ET.Element):
         if self.tag == PyMongoElement.collection:
             i = 0
             for doc in collection.find():
+                i += 1
                 if i == index:
                     attrib_clone = self.attrib.copy()
                     attrib_clone[PyMongoElement.object_id] = str(doc["_id"])
                     return PyMongoElement(
                         self.client, PyMongoElement.document, attrib_clone
                     )
-                i += 1
             raise Exception("Index out of bounds")
 
         assert PyMongoElement.object_id in self.attrib, "object_id is not set"
