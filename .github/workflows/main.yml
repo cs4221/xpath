@@ -83,6 +83,9 @@ jobs:
         run: make install
       - name: Run tests
         run: make test
+      - name: Shutdown MongoDB
+        run: |
+          brew services stop mongodb-community@5.0
 
   tests_win:
     needs: linter
@@ -98,8 +101,11 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - uses: ankane/setup-mongodb@v1
-      - run: |
-          mongo --eval "db.version()"
+      - name: Run MongoDB
+        run: |
+          cd C:\
+          md "\data\db"
+          "C:\Program Files\MongoDB\Server\5.0\bin\mongod.exe" --dbpath="c:\data\db"
       - name: Install Pip
         run: pip install --user --upgrade pip
       - name: Install project
