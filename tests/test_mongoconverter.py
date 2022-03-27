@@ -2,11 +2,12 @@ from pymongo import MongoClient
 import pytest
 import os
 import json
+from xpath import mongoconverter
 
 database_name = "cs4221_test"
 data_directory = os.path.join(os.path.dirname(__file__), "mongo_data")
 
-
+# Easy creation of a MongoClient
 @pytest.fixture()
 def mongo_client():
     client = MongoClient("localhost", 27017)

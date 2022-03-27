@@ -69,7 +69,7 @@ class PyMongoElement(ET.Element):
             id(self),
         )
 
-    def copy(self):
+    def __copy__(self):
         """Shallow copy of current element."""
         result = self.__class__(self.client, self.tag, self.attrib)
         result.text = self.text
