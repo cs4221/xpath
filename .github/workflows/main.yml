@@ -112,3 +112,5 @@ jobs:
         run: pip install -e .[test]
       - name: run tests
         run: pytest -s -vvvv -l --tb=long tests
+      - name: Shutdown MongoDB
+        run: mongo admin --eval "db.shutdownServer()"
