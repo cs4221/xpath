@@ -35,7 +35,7 @@ def mongo_client():
     client.close()
 
 
-# Test for successful loading of json
+# Test for loading of json
 def test_players(mongo_client):
     database = mongo_client[database_name]
     assert "players" in database.list_collection_names()
@@ -50,7 +50,13 @@ def test_inventory(mongo_client):
     assert paper["qty"] == 100
 
 
-# Test for xpath
+# Tests for PyMongoElement
 def test_creating_mongoconverter(mongo_client):
     root = PyMongoElement(mongo_client)
     assert root.tag == "databases"
+
+
+def test_database_list(mongo_client):
+    root = PyMongoElement(mongo_client)
+    result: list[PyMongoElement] = root.findall(f"./database")
+    assert len(result) == 2

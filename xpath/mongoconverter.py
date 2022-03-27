@@ -15,15 +15,15 @@ class PyMongoElement(ET.Element):
     This class wraps around a PyMongo client.
     It subclasses xml's Element class, implementing lazy traversal.
 
-    A toplevel client will have no tags
+    A toplevel client will have no attributes
         -> e.g. <databases>
-    A node at the level of a database will have a tag called:
+    A node at the level of a database will have an attribute called:
         - database_name
-        -> e.g. <database name = "app">
-    A node at the level of a collection will have the tags:
+        -> e.g. <database database_name = "app">
+    A node at the level of a collection will have the attributes:
         - database_name
         - collection_name
-        -> e.g. <collection database_name = "app" collection_name="users">
+        -> e.g. <collection database_name = "app" collection_name = "users">
     A node at the level of a document will have the tags:
         - database_name
         - collection_name
