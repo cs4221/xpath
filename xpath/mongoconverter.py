@@ -93,6 +93,7 @@ class PyMongoElement(ET.Element):
         if self.tag == PyMongoElement.database:
             # Return the number of collections
             return len(database.list_collection_names())
+
         assert (
             PyMongoElement.collection_name in self.attrib
         ), "collection_name is not set"
@@ -105,9 +106,11 @@ class PyMongoElement(ET.Element):
             return collection.count_documents({})
 
         assert PyMongoElement.object_id in self.attrib, "object_id is not set"
+
         document = collection.find_one(
             {"_id": ObjectId(self.attrib[PyMongoElement.object_id])}
         )
+
         return len(document)
 
     def __bool__(self):
@@ -145,19 +148,20 @@ class PyMongoElement(ET.Element):
         ), "collection_name is not set"
         collection = database[self.attrib[PyMongoElement.collection_name]]
 
-        i = 0
         if self.tag == PyMongoElement.collection:
+            i = 0
             for doc in collection.find():
                 if i == index:
                     attrib_clone = self.attrib.copy()
                     attrib_clone[PyMongoElement.object_id] = str(doc["_id"])
-                    result = PyMongoElement(
+                    return PyMongoElement(
                         self.client, PyMongoElement.document, attrib_clone
                     )
-                    return result
                 i += 1
+            raise Exception("Index out of bounds")
 
         assert PyMongoElement.object_id in self.attrib, "object_id is not set"
+
         # This object is a document - fall back on the map converter
         if self.tag == PyMongoElement.document:
             document = collection.find_one(
