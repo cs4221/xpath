@@ -4,7 +4,7 @@ import os
 import json
 
 database_name = "cs4221_test"
-data_directory = "mongo_data"
+data_directory = os.path.join(os.path.dirname(__file__), "mongo_data")
 
 
 @pytest.fixture()
