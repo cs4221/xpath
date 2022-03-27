@@ -149,7 +149,7 @@ class PyMongoElement(ET.Element):
         collection = database[self.attrib[PyMongoElement.collection_name]]
 
         if self.tag == PyMongoElement.collection:
-            i = 1
+            i = 0
             for doc in collection.find():
                 if i == index:
                     attrib_clone = self.attrib.copy()
