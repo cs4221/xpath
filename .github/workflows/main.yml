@@ -105,7 +105,7 @@ jobs:
         run: |
           cd C:\
           md "\data\db"
-          "C:\Program Files\MongoDB\Server\5.0\bin\mongod.exe" --dbpath="c:\data\db"
+          "C:\Program Files\MongoDB\Server\5.0\bin\mongod.exe"
       - name: Install Pip
         run: pip install --user --upgrade pip
       - name: Install project
