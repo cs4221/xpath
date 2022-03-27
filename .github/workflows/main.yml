@@ -76,8 +76,9 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - uses: ankane/setup-mongodb@v1
-      - run: |
-          mongod
+      - name: Run MongoDB
+        run: |
+          mongod --port 27020
       - name: Install project
         run: make install
       - name: Run tests
