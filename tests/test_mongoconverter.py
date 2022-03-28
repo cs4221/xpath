@@ -177,3 +177,15 @@ def test_len(mongo_client):
     assert len(inventory) == mongo_client[database_name][
         "inventory"
     ].count_documents({})
+
+
+def test_iter(mongo_client):
+    root = PyMongoElement(mongo_client)
+    assert len(list(root.iter("*"))) == 235
+    assert len(list(root.iter("database"))) == 4
+    cs4221_test_db = root.find(f"./database[@database_name='{database_name}']")
+    assert len(list(cs4221_test_db.iter("collection"))) == 2
+    inventory = cs4221_test_db.find(
+        "./collection[@collection_name='inventory']"
+    )
+    assert len(list(inventory.iter("document"))) == 5
