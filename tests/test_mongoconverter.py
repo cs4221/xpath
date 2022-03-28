@@ -160,3 +160,20 @@ def test_indexerror_in_getitem(mongo_client):
 def test_copy(mongo_client):
     root = PyMongoElement(mongo_client)
     assert root.__copy__().tag == "databases"
+
+
+def test_len(mongo_client):
+    root = PyMongoElement(mongo_client)
+    names_of_databases = mongo_client.list_database_names()
+    assert len(root) == len(names_of_databases)
+
+    cs4221_test_db = root.find(f"./database[@database_name='{database_name}']")
+    names_of_collections = mongo_client[database_name].list_collection_names()
+    assert len(cs4221_test_db) == len(names_of_collections)
+
+    inventory = cs4221_test_db.find(
+        "./collection[@collection_name='inventory']"
+    )
+    assert len(inventory) == mongo_client[database_name][
+        "inventory"
+    ].count_documents({})
