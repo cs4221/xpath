@@ -1,6 +1,3 @@
-import argparse
-
-
 def main() -> None:  # pragma: no cover
     """
     The main function executes on commands:
@@ -17,36 +14,36 @@ def main() -> None:  # pragma: no cover
         * List all available tasks
         * Run an application (Flask, FastAPI, Django, etc.)
     """
-    parser = argparse.ArgumentParser(
-        description="xpath.",
-        epilog="Enjoy the xpath functionality!",
-    )
-    # This is required positional argument
-    parser.add_argument(
-        "name",
-        type=str,
-        help="The username",
-        default="cs4221",
-    )
-    # This is optional named argument
-    parser.add_argument(
-        "-m",
-        "--message",
-        type=str,
-        help="The Message",
-        default="Hello",
-        required=False,
-    )
-    parser.add_argument(
-        "-v",
-        "--verbose",
-        action="store_true",
-        help="Optionally adds verbosity",
-    )
-    args = parser.parse_args()
-    print(f"{args.message} {args.name}!")
-    if args.verbose:
-        print("Verbose mode is on.")
+    # parser = argparse.ArgumentParser(
+    #     description="xpath.",
+    #     epilog="Enjoy the xpath functionality!",
+    # )
+    # # This is required positional argument
+    # parser.add_argument(
+    #     "name",
+    #     type=str,
+    #     help="The username",
+    #     default="cs4221",
+    # )
+    # # This is optional named argument
+    # parser.add_argument(
+    #     "-m",
+    #     "--message",
+    #     type=str,
+    #     help="The Message",
+    #     default="Hello",
+    #     required=False,
+    # )
+    # parser.add_argument(
+    #     "-v",
+    #     "--verbose",
+    #     action="store_true",
+    #     help="Optionally adds verbosity",
+    # )
+    # args = parser.parse_args()
+    # print(f"{args.message} {args.name}!")
+    # if args.verbose:
+    #     print("Verbose mode is on.")
 
     print("Executing main function")
     print("End of main function")

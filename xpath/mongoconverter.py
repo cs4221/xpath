@@ -77,9 +77,6 @@ class PyMongoElement(ET.Element):
     def __copy__(self):
         """Shallow copy of current element."""
         result = self.__class__(self.client, self.tag, self.attrib)
-        result.text = self.text
-        result.tail = self.tail
-        result[:] = self
         return result
 
     def __len__(self):

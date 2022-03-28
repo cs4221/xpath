@@ -127,3 +127,31 @@ def test_bool(mongo_client):
     with pytest.warns(RuntimeWarning):
         if root:
             pass
+
+
+def test_indexerror_in_getitem(mongo_client):
+    root = PyMongoElement(mongo_client)
+    names_of_databases = mongo_client.list_database_names()
+
+    for i in range(len(names_of_databases)):
+        assert root[i] is not None
+    with pytest.raises(IndexError):
+        root[len(names_of_databases)]
+
+    cs4221_test_db = root.find(f"./database[@database_name='{database_name}']")
+    names_of_collections = mongo_client[database_name].list_collection_names()
+
+    for i in range(len(names_of_collections)):
+        assert cs4221_test_db[i] is not None
+    with pytest.raises(IndexError):
+        cs4221_test_db[len(names_of_collections)]
+
+    inventory = cs4221_test_db.find(
+        "./collection[@collection_name='inventory']"
+    )
+    for i in range(
+        mongo_client[database_name]["inventory"].count_documents({})
+    ):
+        assert inventory[i] is not None
+    with pytest.raises(IndexError):
+        inventory[mongo_client[database_name]["inventory"].count_documents({})]
