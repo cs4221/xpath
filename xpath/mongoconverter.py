@@ -4,7 +4,6 @@ Methods to take a PyMongo client and run xpath queries on it.
 import warnings
 import xml.etree.ElementTree as ET
 
-from bson.objectid import ObjectId
 from pymongo import MongoClient
 
 from .elemconverter import elem_to_tree
@@ -29,6 +28,9 @@ class PyMongoElement(ET.Element):
         - collection_name
         - object_id
         -> e.g. <document ...>
+    The databases, database and collection node will be implemented
+    as PyMongoElements.
+    The document node will be the xml's native Element node.
     """
 
     # Constants for the attributes
@@ -103,14 +105,6 @@ class PyMongoElement(ET.Element):
             # Return the number of documents in this collection
             return collection.count_documents({})
 
-        assert PyMongoElement.object_id in self.attrib, "object_id is not set"
-
-        document = collection.find_one(
-            {"_id": ObjectId(self.attrib[PyMongoElement.object_id])}
-        )
-
-        return len(document)
-
     def __bool__(self):
         warnings.warn(
             "Not used in this implementation, the value is undefined."
@@ -161,24 +155,9 @@ class PyMongoElement(ET.Element):
                 if i == index:
                     attrib_clone = self.attrib.copy()
                     attrib_clone[PyMongoElement.object_id] = str(doc["_id"])
-                    return PyMongoElement(
-                        self.client, PyMongoElement.document, attrib_clone
-                    )
-            raise Exception("Index out of bounds")
-
-        assert PyMongoElement.object_id in self.attrib, "object_id is not set"
-
-        # This object is a document - fall back on the map converter
-        if self.tag == PyMongoElement.document:
-            document = collection.find_one(
-                {"_id": ObjectId(self.attrib[PyMongoElement.object_id])}
-            )
-
-            return (
-                elem_to_tree(document, PyMongoElement.document)
-                .getroot()
-                .__getitem__(index)
-            )
+                    return elem_to_tree(
+                        doc, PyMongoElement.document, attrib_clone
+                    ).getroot()
 
     def __setitem__(self, index, element):
         warnings.warn(
@@ -268,25 +247,7 @@ class PyMongoElement(ET.Element):
             for doc in collection.find():
                 attrib_clone = self.attrib.copy()
                 attrib_clone[PyMongoElement.object_id] = str(doc["_id"])
-                child = PyMongoElement(
-                    self.client, PyMongoElement.document, attrib_clone
+                child = elem_to_tree(
+                    doc, PyMongoElement.document, attrib_clone
                 )
                 yield from child.iter(tag)
-        elif self.tag == PyMongoElement.document:
-            assert (
-                PyMongoElement.database_name in self.attrib
-            ), "database_name is not set"
-            database = self.client[self.attrib[PyMongoElement.database_name]]
-
-            assert (
-                PyMongoElement.collection_name in self.attrib
-            ), "collection_name is not set"
-            collection = database[self.attrib[PyMongoElement.collection_name]]
-
-            document = collection.find_one(
-                {"_id": ObjectId(self.attrib[PyMongoElement.object_id])}
-            )
-
-            yield from elem_to_tree(
-                document, PyMongoElement.document
-            ).getroot().iter(tag)

@@ -29,10 +29,19 @@ def insert(parent: ET.Element, tag: str, elem: Any) -> ET.Element:
     return child_node
 
 
-def elem_to_tree(elem: Any, roottag: str = "root") -> ET.ElementTree:
+def elem_to_tree(
+    elem: Any, roottag: str = "root", toplevelattribs: dict[str, str] = {}
+) -> ET.ElementTree:
     """
     Takes a Python dictionary/list/value, and converts it to an object tree.
     The top level node has tag name `roottag`.
+    `toplevelattribs` contains attributes
+    that you want to set in the top level node.
     """
-    tree: ET.Element = ET.Element("remove_later")
-    return ET.ElementTree(insert(tree, roottag, elem))
+    tree: ET.Element = ET.Element("placeholder_root")
+    result = ET.ElementTree(insert(tree, roottag, elem))
+
+    for k, v in toplevelattribs.items():
+        result.getroot().set(str(k), str(v))
+
+    return result

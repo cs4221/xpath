@@ -74,9 +74,7 @@ def test_getting_players(mongo_client):
     )
 
     # Check the position of the only player who's surname is Wehn
-    mario_wehn_position = players.find(
-        "./document//*[surname='Wehn']/position"
-    )
+    mario_wehn_position = players.find("./document[surname='Wehn']/position")
     assert mario_wehn_position.text == "keeper"
 
 
@@ -91,3 +89,8 @@ def test_getting_specific_object_id(mongo_client):
     oid = mongo_client[database_name]["players"].find_one()["_id"]
     player = players.find(f"./*[@object_id='{oid}']")
     assert player.attrib[PyMongoElement.object_id] == str(oid)
+
+    # Uncomment the following if you want to look at the tree structure
+    # print()
+    # for e in root.find(f"./database[@database_name='{database_name}']").iter():
+    #     print(e)

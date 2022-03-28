@@ -91,3 +91,16 @@ def test_elem_to_tree_convert_dict():
     with open("output.xml", "r") as file:
         data = file.read().rstrip()
         assert data == "<root><1>2</1><hello>4</hello></root>"
+
+
+def test_setting_attr():
+    attr = {"attr1": "val1", "attr2": "val2"}
+    list = [1, 2]
+    list_tree = elem_to_tree(list, "root", attr)
+    list_tree.write("output.xml")
+    with open("output.xml", "r") as file:
+        data = file.read().rstrip()
+        assert (
+            data == '<root attr1="val1" attr2="val2">'
+            "<element>1</element><element>2</element></root>"
+        )
