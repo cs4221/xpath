@@ -115,11 +115,17 @@ class PyMongoElement(ET.Element):
         warnings.warn(
             "Not used in this implementation, the value is undefined."
         )
-        return False
+        return len(self) != 0
 
     def __getitem__(self, index):
+        """
+        Find the child which index stops at.
+        Go to that child with the adjusted index.
+        """
         if self.tag == PyMongoElement.databases:
             names = self.client.list_database_names()
+            if index >= len(names):
+                raise IndexError
             attrib_clone = self.attrib.copy()
             attrib_clone[PyMongoElement.database_name] = names[index]
             result = PyMongoElement(
@@ -134,6 +140,8 @@ class PyMongoElement(ET.Element):
 
         if self.tag == PyMongoElement.database:
             names = database.list_collection_names()
+            if index >= len(names):
+                raise IndexError
             attrib_clone = self.attrib.copy()
             attrib_clone[PyMongoElement.collection_name] = names[index]
             result = PyMongoElement(
@@ -147,6 +155,8 @@ class PyMongoElement(ET.Element):
         collection = database[self.attrib[PyMongoElement.collection_name]]
 
         if self.tag == PyMongoElement.collection:
+            if index >= collection.count_documents({}):
+                raise IndexError
             for i, doc in enumerate(collection.find()):
                 if i == index:
                     attrib_clone = self.attrib.copy()
@@ -164,7 +174,11 @@ class PyMongoElement(ET.Element):
                 {"_id": ObjectId(self.attrib[PyMongoElement.object_id])}
             )
 
-            return elem_to_tree(document).getroot().__getitem__(index)
+            return (
+                elem_to_tree(document, PyMongoElement.document)
+                .getroot()
+                .__getitem__(index)
+            )
 
     def __setitem__(self, index, element):
         warnings.warn(
@@ -211,7 +225,6 @@ class PyMongoElement(ET.Element):
         *tag* is what tags to look for (default is to return all elements)
 
         Return an iterator containing all the matching elements.
-
         """
         if tag == "*":
             tag = None

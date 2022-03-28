@@ -66,19 +66,13 @@ def test_getting_test_database(mongo_client):
     assert db.attrib["database_name"] == database_name
 
 
-# def test_getting_players(mongo_client):
-#     """Gets the `players` collection node."""
-#     root = PyMongoElement(mongo_client)
-#     players: PyMongoElement = root.find(
-#         f"./database[@database_name='{database_name}']/collection[@collection_name='players']"
-#     )
+def test_getting_players(mongo_client):
+    """Gets the `players` collection node."""
+    root = PyMongoElement(mongo_client)
+    players: PyMongoElement = root.find(
+        f"./database[@database_name='{database_name}']/collection[@collection_name='players']"
+    )
 
-#     # Check that the person with the surname 'Wehn' is a keeper
-#     # assert (
-#     #     players.find("./document/[surname='Wehn']/../position").text()
-#     #     == "keeper"
-#     # )
-#     # mongo_client.url_list()
-
-#     for node in players:
-#         print(node)
+    # Check the position of the only player who's surname is Wehn
+    mario_wehn_position = players.find(".//*[surname='Wehn']/position")
+    assert mario_wehn_position.text == "keeper"
