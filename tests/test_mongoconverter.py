@@ -155,3 +155,8 @@ def test_indexerror_in_getitem(mongo_client):
         assert inventory[i] is not None
     with pytest.raises(IndexError):
         inventory[mongo_client[database_name]["inventory"].count_documents({})]
+
+
+def test_copy(mongo_client):
+    root = PyMongoElement(mongo_client)
+    assert root.__copy__().tag == "databases"
