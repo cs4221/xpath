@@ -90,7 +90,18 @@ def test_getting_specific_object_id(mongo_client):
     player = players.find(f"./*[@object_id='{oid}']")
     assert player.attrib[PyMongoElement.object_id] == str(oid)
 
-    # Uncomment the following if you want to look at the tree structure
-    # print()
-    # for e in root.find(f"./database[@database_name='{database_name}']").iter():
-    #     print(e)
+
+def test_warnings_for_untouched_fns(mongo_client):
+    elem = PyMongoElement(mongo_client)
+    with pytest.warns(RuntimeWarning):
+        elem.__setitem__(1, 1)
+    with pytest.warns(RuntimeWarning):
+        elem.__delitem__(1)
+    with pytest.warns(RuntimeWarning):
+        elem.append(None)
+    with pytest.warns(RuntimeWarning):
+        elem.extend(None)
+    with pytest.warns(RuntimeWarning):
+        elem.insert(1, None)
+    with pytest.warns(RuntimeWarning):
+        elem.remove(None)

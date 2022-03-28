@@ -161,32 +161,38 @@ class PyMongoElement(ET.Element):
 
     def __setitem__(self, index, element):
         warnings.warn(
-            """ not implemented, function does not change database """
+            """not implemented, function does not change database""",
+            RuntimeWarning,
         )
 
     def __delitem__(self, index):
         warnings.warn(
-            """ not implemented, function does not change database """
+            """not implemented, function does not change database""",
+            RuntimeWarning,
         )
 
     def append(self, subelement):
         warnings.warn(
-            """ not implemented, function does not change database """
+            """not implemented, function does not change database""",
+            RuntimeWarning,
         )
 
     def extend(self, elements):
         warnings.warn(
-            """ not implemented, function does not change database """
+            """not implemented, function does not change database""",
+            RuntimeWarning,
         )
 
     def insert(self, index, subelement):
         warnings.warn(
-            """ not implemented, function does not change database """
+            """not implemented, function does not change database""",
+            RuntimeWarning,
         )
 
     def remove(self, subelement):
         warnings.warn(
-            """ not implemented, function does not change database """
+            """not implemented, function does not change database""",
+            RuntimeWarning,
         )
 
     def iter(self, tag=None):
