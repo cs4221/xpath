@@ -105,3 +105,18 @@ def test_warnings_for_untouched_fns(mongo_client):
         elem.insert(1, None)
     with pytest.warns(RuntimeWarning):
         elem.remove(None)
+
+
+def test_typeerror_in_init():
+    with pytest.raises(TypeError):
+        PyMongoElement("not a client")
+
+
+def test_repr(mongo_client):
+    root = PyMongoElement(mongo_client)
+    assert root.__repr__() == "<%s %r attributes = %s at %#x>" % (
+        root.__class__.__name__,
+        repr(root.tag),
+        " ".join([str(k) + "=" + str(v) for (k, v) in root.attrib.items()]),
+        id(root),
+    )
