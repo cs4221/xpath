@@ -74,5 +74,20 @@ def test_getting_players(mongo_client):
     )
 
     # Check the position of the only player who's surname is Wehn
-    mario_wehn_position = players.find(".//*[surname='Wehn']/position")
+    mario_wehn_position = players.find(
+        "./document//*[surname='Wehn']/position"
+    )
     assert mario_wehn_position.text == "keeper"
+
+
+def test_getting_specific_object_id(mongo_client):
+    # Find a player by specific id
+    root = PyMongoElement(mongo_client)
+    players: PyMongoElement = root.find(
+        f"./database[@database_name='{database_name}']/collection[@collection_name='players']"
+    )
+
+    # Try finding the object id of any document
+    oid = mongo_client[database_name]["players"].find_one()["_id"]
+    player = players.find(f"./*[@object_id='{oid}']")
+    assert player.attrib[PyMongoElement.object_id] == str(oid)
