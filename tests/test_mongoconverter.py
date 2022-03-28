@@ -120,3 +120,10 @@ def test_repr(mongo_client):
         " ".join([str(k) + "=" + str(v) for (k, v) in root.attrib.items()]),
         id(root),
     )
+
+
+def test_bool(mongo_client):
+    root = PyMongoElement(mongo_client)
+    with pytest.warns(RuntimeWarning):
+        if root:
+            pass

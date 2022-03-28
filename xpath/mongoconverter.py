@@ -107,7 +107,8 @@ class PyMongoElement(ET.Element):
 
     def __bool__(self):
         warnings.warn(
-            "Not used in this implementation, the value is undefined."
+            "Not used in this implementation, the value is undefined.",
+            RuntimeWarning,
         )
         return len(self) != 0
 
