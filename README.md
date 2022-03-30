@@ -27,6 +27,10 @@ $ python -m xpath
 $ xpath
 ```
 
+## Setup XPath parser
+If there are changes to the grammer rules, run setup_compiler.bat if on windows
+with the path to .g4 file as the CLI argument.
+
 ## Development
 
 Read the [CONTRIBUTING.md](CONTRIBUTING.md) file.
