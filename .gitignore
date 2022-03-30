@@ -134,5 +134,6 @@ dmypy.json
 # vscode
 .vscode
 
-# generated java files
+# generated files
 *.antlr
+*.antlr4py3
