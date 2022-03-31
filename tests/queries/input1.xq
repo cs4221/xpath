@@ -1,1 +1,1 @@
-/library/album[title='Sepuruh']/year
+/library

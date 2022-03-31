@@ -1,1 +1,1 @@
-/library/album/year/text()
+/child::library[album='Sepuruh']
