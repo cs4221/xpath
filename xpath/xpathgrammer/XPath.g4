@@ -1,10 +1,13 @@
-grammar XPath;        // XPATH GRAMMAR
+grammar XPath;
 
-EXPR : '/' NODE_TEST PRED? EXPR?;
-PRED : '[' ']';
+// Parser Rules
+expr: '/' nodetest pred? expr?;
+pred: '['']';
+nodetest: pathid? NODE ;
+pathid: AXES '::';
 
-NODE_TEST: (AXES '::') ? ;
 
+// Lexer Rules
     AXES:  'self'
         |  'child'
         |  'descendant'
@@ -34,3 +37,7 @@ OPERATOR:  '+'
         |  'and'
         |  'mod'
         ;
+        
+    NODE:  [a-zA-Z]+;
+
+      WS: [ \t\n\r\f\s] -> skip;
