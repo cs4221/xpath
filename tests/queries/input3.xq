@@ -1,0 +1,1 @@
+/library/album/year/text()
