@@ -1,4 +1,3 @@
-from msilib.schema import File
 import sys
 from antlr4 import CommonTokenStream, FileStream
 from compiler import XPathLexer, XPathParser
