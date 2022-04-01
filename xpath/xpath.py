@@ -4,6 +4,12 @@ from antlr4 import CommonTokenStream, FileStream
 from compiler import XPathLexer, XPathParser
 
 
+'''
+Produces a parse tree with the root of the tree for the xpath query labelled
+xpath
+'''
+
+
 class XPath:
     def __init__(self, xpath_file: str) -> None:
         self.input = FileStream(xpath_file)
