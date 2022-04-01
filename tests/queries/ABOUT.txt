@@ -6,4 +6,9 @@ passed: input5.xq - qualifiedpath + allselector [*]
 passed: input6.xq - qualifiedpath + special html tag names [_tagname]
 passed: input7.xq - qualifiedpath + special html tag names [tag-name_one]
 passed: input8.xq - qualifiedpath + attribute !may need to differentiate between standard xml tag and attribute
-input9.xq - unqualifiedpath + predicate
+passed: input9.xq - unqualifiedpath + single relative unqualifiedpath predicate
+passed: input10.xq - unqualifiedpath + single absolute unqualifiedpath predicate
+passed: input11.xq - unqualifiedpath + single relative qualifiedpath chained with qualifiedpath predicate
+passed: input12.xq - unqualifiedpath + single relative qualifiedpath chained with unqualifiedpath predicate
+passed: input13.xq - unqualifiedpath + single absolute qualifiedpath predicate
+passed: input14.xq - unqualifiedpath + single predicate + unqualifiedpath + unqualifiedpath
