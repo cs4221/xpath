@@ -12,3 +12,5 @@ passed: input11.xq - unqualifiedpath + single relative qualifiedpath chained wit
 passed: input12.xq - unqualifiedpath + single relative qualifiedpath chained with unqualifiedpath predicate
 passed: input13.xq - unqualifiedpath + single absolute qualifiedpath predicate
 passed: input14.xq - unqualifiedpath + single predicate + unqualifiedpath + unqualifiedpath
+failed: input15.xq - double predicate connected by 'and'
+failed: input16.xq - double predicate connected by 'or'
