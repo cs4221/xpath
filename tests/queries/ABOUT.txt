@@ -1,0 +1,9 @@
+passed: input1.xq - unqualifiedpath
+passed: input2.xq - qualifiedpath
+failed: input3.xq - qualifiedpath + alltextselector [text()]
+failed: input4.xq - qualifiedpath + alltextselector [node()]
+passed: input5.xq - qualifiedpath + allselector [*]
+passed: input6.xq - qualifiedpath + special html tag names [_tagname]
+passed: input7.xq - qualifiedpath + special html tag names [tag-name_one]
+passed: input8.xq - qualifiedpath + attribute !may need to differentiate between standard xml tag and attribute
+input9.xq - unqualifiedpath + predicate

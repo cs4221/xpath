@@ -1,1 +1,1 @@
-/child::library[album='Sepuruh']
+/node()
