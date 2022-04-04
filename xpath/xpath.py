@@ -1,6 +1,6 @@
 import sys
 from antlr4 import CommonTokenStream, FileStream, ParseTreeWalker
-from compiler import XPathLexer, XPathParser, XPathListener
+from compilerv1 import XPathLexer, XPathParser, XPathListener
 
 
 '''
