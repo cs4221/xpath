@@ -1,1 +1,1 @@
-/album[artist='fwefw' or year<=2020]
+/players/player[name="Mario"]/position
