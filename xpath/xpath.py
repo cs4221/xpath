@@ -1,6 +1,6 @@
 import sys
-from antlr4 import CommonTokenStream, FileStream
-from compiler import XPathLexer, XPathParser
+from antlr4 import CommonTokenStream, FileStream, ParseTreeWalker
+from compiler import XPathLexer, XPathParser, XPathListener
 
 
 '''
@@ -15,11 +15,17 @@ class XPath:
         self.lexer = XPathLexer(self.input)
         self.stream = CommonTokenStream(self.lexer)
         self.parser = XPathParser(self.stream)
-        self.parse_tree = self.parser.xpath()
+        self.parseTree = self.parser.xpath()
+        self.treeWalker = ParseTreeWalker()
+        self.listener = XPathListener()
+        pass
+
+    def constructMongoQuery(self):
+        self.treeWalker.walk(self.listener, self.parseTree)
         pass
 
     def toDebugString(self) -> str:
-        return self.parse_tree.toStringTree(recog=self.parser)
+        return self.parseTree.toStringTree(recog=self.parser)
     pass
 
 

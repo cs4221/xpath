@@ -1,5 +1,5 @@
 # Generated from .\xpath\xpathgrammer\XPath.g4 by ANTLR 4.9.3
-from antlr4 import *
+from antlr4 import ParseTreeListener
 if __name__ is not None and "." in __name__:
     from .XPathParser import XPathParser
 else:
