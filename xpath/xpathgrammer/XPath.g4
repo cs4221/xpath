@@ -16,7 +16,8 @@ Issues:
 xpath: expr EOF;
 
 // Location step
-expr: locationstepexpr ( locationstepexpr )*;
+expr: document ( locationstepexpr )*;
+document: 'doc' OP StringLiteral CP;
 locationstepexpr: SLASH relativepath
                 | SLASH relativepath pred
                 ;
@@ -77,6 +78,7 @@ AXES: KW_ANCESTOR
 //    - Element names can contain letters, digits, hyphens, underscores, and periods
 //    - Element names cannot contain spaces
 NODE_NAME: [a-zA-Z_][a-zA-Z0-9._-]*;
+DOCUMENT_NAME: [a-zA-Z0-9._-]+;
 
 PREDICATE_OPERATOR: EQ
                   | LT

@@ -1,5 +1,5 @@
 # Generated from .\xpath\xpathgrammer\XPath.g4 by ANTLR 4.9.3
-from antlr4 import ParseTreeListener
+from antlr4 import *
 if __name__ is not None and "." in __name__:
     from .XPathParser import XPathParser
 else:
@@ -23,6 +23,15 @@ class XPathListener(ParseTreeListener):
 
     # Exit a parse tree produced by XPathParser#expr.
     def exitExpr(self, ctx:XPathParser.ExprContext):
+        pass
+
+
+    # Enter a parse tree produced by XPathParser#document.
+    def enterDocument(self, ctx:XPathParser.DocumentContext):
+        pass
+
+    # Exit a parse tree produced by XPathParser#document.
+    def exitDocument(self, ctx:XPathParser.DocumentContext):
         pass
 
 
