@@ -1,1 +1,1 @@
-doc("cs4221_test")/players/player[name="Mario"]
+doc("cs4221_test")/players/player[position=""]
