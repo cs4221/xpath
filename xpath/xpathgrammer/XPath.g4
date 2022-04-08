@@ -54,7 +54,7 @@ predpath: absolutepath ( SLASH relativepath )*
         | relativepath ( SLASH relativepath )*
         ;
 
-literal: StringLiteral | IntegerLiteral;
+literal: IntegerLiteral | StringLiteral;
 
 // Lexer Rules
 AXES: KW_ANCESTOR

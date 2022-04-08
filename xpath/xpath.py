@@ -1,6 +1,8 @@
 import sys
-from antlr4 import CommonTokenStream, FileStream, ParseTreeWalker
-from compilerv1 import XPathLexer, XPathParser, XPathListener
+from antlr4 import CommonTokenStream, FileStream, ParseTreeWalker, InputStream
+from .compilerv1 import XPathLexer, XPathParser
+# from mongoconverter import PyMongoElement
+from .queryconstructor import MongoQuery
 
 
 '''
@@ -10,19 +12,32 @@ xpath
 
 
 class XPath:
-    def __init__(self, xpath_file: str) -> None:
-        self.input = FileStream(xpath_file)
-        self.lexer = XPathLexer(self.input)
-        self.stream = CommonTokenStream(self.lexer)
-        self.parser = XPathParser(self.stream)
-        self.parseTree = self.parser.xpath()
+    def __init__(self, pymongo=None) -> None:
         self.treeWalker = ParseTreeWalker()
-        self.listener = XPathListener()
+        self.result = []
+        self.listener = MongoQuery(self.result, pymongo)
         pass
 
-    def constructMongoQuery(self):
+    def fromQueryString(self, expr: str):
+        input = InputStream(expr)
+        lexer = XPathLexer(input)
+        stream = CommonTokenStream(lexer)
+        self.parser = XPathParser(stream)
+        self.parseTree = self.parser.xpath()
         self.treeWalker.walk(self.listener, self.parseTree)
-        pass
+        return self
+
+    def fromQueryFile(self, xpath_file: str):
+        input = FileStream(xpath_file)
+        lexer = XPathLexer(input)
+        stream = CommonTokenStream(lexer)
+        self.parser = XPathParser(stream)
+        self.parseTree = self.parser.xpath()
+        self.treeWalker.walk(self.listener, self.parseTree)
+        return self
+
+    def get(self):
+        return self.result
 
     def toDebugString(self) -> str:
         return self.parseTree.toStringTree(recog=self.parser)
@@ -30,7 +45,13 @@ class XPath:
 
 
 if __name__ == "__main__":
-    file_name = sys.argv[1]
-    xpath = XPath(file_name)
-    print(xpath.toDebugString())
+    input = FileStream(sys.argv[1])
+    lexer = XPathLexer(input)
+    stream = CommonTokenStream(lexer)
+    parser = XPathParser(stream)
+    parseTree = parser.xpath()
+    walker = ParseTreeWalker()
+    listerner = MongoQuery()
+    print(parseTree.toStringTree(recog=parser))
+    walker.walk(listerner, parseTree)
     pass

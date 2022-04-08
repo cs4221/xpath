@@ -1321,11 +1321,11 @@ class XPathParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def StringLiteral(self):
-            return self.getToken(XPathParser.StringLiteral, 0)
-
         def IntegerLiteral(self):
             return self.getToken(XPathParser.IntegerLiteral, 0)
+
+        def StringLiteral(self):
+            return self.getToken(XPathParser.StringLiteral, 0)
 
         def getRuleIndex(self):
             return XPathParser.RULE_literal
