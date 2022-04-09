@@ -44,9 +44,13 @@ def test_xpath_input15_find_player_surname_from_file(mongo_client):
     assert len(results) == 1
     pass
 
+
 def test_xpath_input15_find_player_surname_from_string(mongo_client):
     root = PyMongoElement(mongo_client)
     xpath = XPath(root)
-    results = xpath.fromQueryString("doc('cs4221_test')/players/player[name='Mario']").get()
-    assert len(results) == 1
+    # players = root.find(f"./database[@database_name='cs4221_test']/collection[@collection_name='players']")
+    # mario = players.find(f"./document[name='Manuel']")
+    # mario_position = mario.find(f"./position")
+    result = xpath.fromQueryString("doc('cs4221_test')/players/player[name='Mario']/position").get()[0]
+    assert result.text == "striker"
     pass

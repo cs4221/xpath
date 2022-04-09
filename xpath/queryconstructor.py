@@ -31,6 +31,7 @@ class MongoQuery(XPathListener):
         self.document_name = None
         self.predicate_field = None
         self.predicate_val = None
+        self.document_field = None
         pass
 
     def enterDocument(self, ctx):
@@ -42,12 +43,6 @@ class MongoQuery(XPathListener):
             pass
         pass
 
-    def exitXpath(self, ctx):
-        document = self.mongocollection.find(f"./document[{self.predicate_field}={self.predicate_val}]")
-        self.result.append(document)
-        print("Exit XPath")
-        pass
-
     def exitDocument(self, ctx):
         print(f"Exit document rule: Database {self.database}")
         pass
@@ -55,7 +50,11 @@ class MongoQuery(XPathListener):
     def enterNodeselector(self, ctx):
         # Once document name is discovered, we can start querying the
         # sollection to find a document we want
-        if self.document_name and self.inpredicate():
+        if not self.inpredicate() and self.document_name:
+            print("Getting document field")
+            self.document_field = ctx.NODE_NAME().getText()
+            pass
+        elif self.document_name and self.inpredicate():
             self.predicate_field = ctx.NODE_NAME().getText()
             print(f"Set predicate field to {self.predicate_field}")
             pass
@@ -77,13 +76,11 @@ class MongoQuery(XPathListener):
     def enterPred(self, ctx):
         print("Enter predicate")
         self.pred = True
-        if self.mongocollection:
-            pass
         pass
 
     def exitPred(self, ctx):
         print("Exit predicate")
-
+        self.pred = False
         pass
 
     def enterPath(self, ctx):
@@ -106,7 +103,7 @@ class MongoQuery(XPathListener):
 
     def enterLiteral(self, ctx):
         print(f"Enter literal: {ctx.IntegerLiteral()}; {ctx.StringLiteral()}")
-        if ctx.IntegerLiteral(): # Bug in ANTLR4, unable to get integer
+        if ctx.IntegerLiteral():
             self.predicate_val = ctx.IntegerLiteral().getText()
             print(f"Set predicate value to {self.predicate_val}")
             pass
@@ -117,4 +114,13 @@ class MongoQuery(XPathListener):
 
     def inpredicate(self):
         return self.pred
+
+    def exitXpath(self, ctx):
+        r = self.mongocollection.find(f"./document[{self.predicate_field}={self.predicate_val}]")
+        if self.document_field:
+            r = r.find(f"./{self.document_field}")
+        self.result.append(r)
+        print("Exit XPath")
+        pass
+
     pass
