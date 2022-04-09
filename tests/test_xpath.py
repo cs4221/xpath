@@ -36,10 +36,17 @@ def mongo_client():
     client.close()
 
 
-def test_xpath_input15_find_player_surname(mongo_client):
+def test_xpath_input15_find_player_surname_from_file(mongo_client):
     f = os.path.join(query_dir, "input15.xq")
     root = PyMongoElement(mongo_client)
     xpath = XPath(root)
     results = xpath.fromQueryFile(f).get()
+    assert len(results) == 1
+    pass
+
+def test_xpath_input15_find_player_surname_from_string(mongo_client):
+    root = PyMongoElement(mongo_client)
+    xpath = XPath(root)
+    results = xpath.fromQueryString("doc('cs4221_test')/players/player[name='Mario']").get()
     assert len(results) == 1
     pass
